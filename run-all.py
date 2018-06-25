@@ -1,5 +1,8 @@
-# created by Daniel Cao
-# write a bash script to download all catalogs at once
+"""
+created by Daniel Cao
+write a bash script to download all catalogs at once
+the bash script calls each smaller script to run and download by creating a list of .sh files to execute
+"""
 
 import os
 
