@@ -1,12 +1,8 @@
-#created by Daniel Cao
-#crop images with specific pixel size from tiff
+# created by Daniel Cao
+# crop images with specific pixel size from tiff
 
-import osgeo
 import gdal
-import numpy as np
 import pandas as pd
-import geopandas as gpd
-import csv
 import os
 
 def get_geoinfo(ds):
@@ -23,9 +19,10 @@ def get_geoinfo(ds):
 
     print(minx,miny,maxx,maxy) 
 
-size = 0.000897575
-count = 0
-fail = 0
+
+SIZE = 0.000897575  # used to get exactly 400x400 images (maybe???)
+COUNT = 0
+FAIL = 0
 coordinate_tif_3 = pd.read_csv('coordinateAndTif-post-3.csv')
 for index, row in coordinate_tif_3.iterrows():
     if row['label'] == 'Flooded / Damaged Building':
