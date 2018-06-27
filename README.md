@@ -1,11 +1,40 @@
 # harvey-data-processing
 For processing of data in the Hurricane Harvey project
 
+Folder Arrangement (Hyak):  
+1. DSSG (I assume ran locally)  
+    a. crop_post_event.py  
+    b. run-all.py  
+    c. test.py  
+    d. loopThroughDir.py  
+    e. script.py
+    f. tomnod.py
+2. dds  
+    a. Crop.py  
+    b. Crop_image.py  
+    c. loopThroughDir.py  
+    e. *anaconda3*  
+    f. *core.3459*  
+    g. *crop_pre*  
+    h. *damage_data.csv*  
+    i. *non_damage_data.csv*  
+    j. *postevent*  
+    k. *preevent*  
+    l. *readme*  
+    m. *run.slurm*  
+    n. *run_all.sh*  
+    o. *slurm-167806.out*  
+    p. *tifRange.csv*
+    q. *tifRange1.csv*  
+3. img  
+    a. crop_img.py
+
 Process flow:
 1. parse.py
 2. getCatalog.py
 3. script.py
 4. run-all.py
+5. loop_through_dir.py
 
 Script Documentation
 
@@ -39,5 +68,8 @@ folders containing tifs will be saved.
 *Output:* run-all-post.sh
   
 * loop_through_dir.py  
-  
- 
+This script goes through all the Tif files in order to find the coordinate ranges 
+of each and saves it in a csv file.  
+*Input:* tif files in folders
+*Output:* tifRange-post-1.csv
+
