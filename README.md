@@ -7,7 +7,7 @@ Folder Arrangement (Hyak):
     b. run-all.py  
     c. test.py  
     d. loopThroughDir.py  
-    e. script.py
+    e. script.py  
     f. tomnod.py
 2. dds  
     a. Crop.py  
@@ -24,7 +24,7 @@ Folder Arrangement (Hyak):
     m. *run.slurm*  
     n. *run_all.sh*  
     o. *slurm-167806.out*  
-    p. *tifRange.csv*
+    p. *tifRange.csv*  
     q. *tifRange1.csv*  
 3. img  
     a. crop_img.py
@@ -34,7 +34,8 @@ Process flow:
 2. getCatalog.py
 3. script.py
 4. run-all.py
-5. loop_through_dir.py
+5. loop_through_dir.py  
+6. tomnod.py
 
 Script Documentation
 
@@ -55,7 +56,7 @@ from parse.py and will get the IDs to be stored in a separate list.
 This script will loop through each Catalog ID in the output file from
 getCatalog.py and write a bash script to download the images into separate
 folders.  
-*Input:* postevent_catalogs.txt, txt files from parse.py
+*Input:* postevent_catalogs.txt, txt files from parse.py  
 *Output:* bash scripts (.sh, each script is for one Catalog ID)
   
 * run-all.py  
@@ -70,6 +71,14 @@ folders containing tifs will be saved.
 * loop_through_dir.py  
 This script goes through all the Tif files in order to find the coordinate ranges 
 of each and saves it in a csv file.  
-*Input:* tif files in folders
+*Input:* tif files in folders  
 *Output:* tifRange-post-1.csv
 
+* tomnod.py  
+This script goes through the TomNod GeoJSON file and creates a table that matches the
+point to the specific tif file that it exists in. This also goes through all the tif
+files to locate points that did not have the catalog ID indicated.  
+*Input:* digitalglobe_crowdsourcing_hurricane_harvey_20170915.geojson, tifRange-post-1.csv  
+*Output:* coordinateAndTif.csv  
+
+* 

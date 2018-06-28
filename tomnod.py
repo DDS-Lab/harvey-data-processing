@@ -5,7 +5,8 @@ will look for the catalog IDs of those which are missing that information
 
 Steps:
 1. Loads the tomnod geojson file and tifRange file
-2.
+2. Cleans the list of catalog IDs into a column called 'complete_catalog_id'
+3. Creates a reference table for the damage points <-> tif file
 """
 
 import gdal
@@ -50,10 +51,6 @@ for catalog_id in tifRange['catalog_id'].unique():
                                             (max(maxx,cat_id_range[catalog_id][1][0]),
                                              max(maxy,cat_id_range[catalog_id][1][1])))
 
-# prints the lat lng ranges of every catalog_id
-for k,v in cat_id_range.items():
-    print (k,v)
-
 # known catalogs that exist in the data set
 POST_EVENT_CATALOG = ['105001000B95E200', '105001000B95E100', '1040010032211E00']
 
@@ -72,15 +69,6 @@ for index, row in tomnod.iterrows():
                 tomnod.set_value(index,'complete_catalog_id',k)
                 tomnod.set_value(index,'catalog_id',k)
                 print(index)
-
-# checking to see what might still be missing values after the process runs
-print(tomnod.loc[tomnod['catalog_id'] == ''])
-print(tomnod.loc[tomnod['complete_catalog_id'] == ''])
-
-# be careful when uncomment this - Daniel
-# not being fed into any succeeding file, not sure why we need this - Andrew
-tomnod.to_csv('tomnod_complete-both-columns.csv', encoding='utf-8')
-print(tomnod.complete_catalog_id.unique())
 
 
 # make a complete table for corresponding tif to images of POST EVENT
@@ -117,5 +105,5 @@ for index, row in tomnod.iterrows():
                 tomnod.set_value(index,'tif',file)
                 break
 
-tomnod.to_csv('coordinateAndTif-post-3.csv', encoding='utf-8')
+tomnod.to_csv('coordinateAndTif.csv', encoding='utf-8')
 
