@@ -28,6 +28,19 @@ Folder Arrangement (Hyak):
     q. *tifRange1.csv*  
 3. img  
     a. crop_img.py
+    
+Folder Arrangement (GitHub Repo):
+1. cropping 
+2. data
+3. downloading  
+    a. parse.py  
+    b. getCatalog.py  
+    c. script.py  
+    d. run-all.py
+4. notebooks
+5. referencing  
+    a. loop_through_dir.py  
+    b. tomnod.py
 
 Process flow:
 1. parse.py
