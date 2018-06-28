@@ -1,10 +1,22 @@
-# created by Daniel Cao
-# create table from coordinates to corresponding tiff
+"""
+created by Daniel Cao
+This script creates a table from coordinates to corresponding tif images where you can find those coordinates and
+will look for the catalog IDs of those which are missing that information
+
+Steps:
+1. Loads the tomnod geojson file and tifRange file
+2.
+"""
+
+import gdal
 import geopandas as gpd
+import os
 import pandas as pd
 
-# load the tomnod geojson file
+# load the tomnod geojson file, TOMNOD = GEOJSON & tifRange file
 tomnod = gpd.read_file('digitalglobe_crowdsourcing_hurricane_harvey_20170915.geojson')
+tifRange = pd.read_csv('tifRange-post-1.csv')
+
 
 # splitting coordinates to different callable variables
 tomnod_x = tomnod['geometry'].x
@@ -18,19 +30,7 @@ def process_tup(tup):
     return [float(ele) for ele in (tup.strip('()').split(','))]
 
 
-tifRange = pd.read_csv('tifRange-post-1.csv')
-
-
-def get_tif_from_coor(x, y, catalog):
-    for index, row in tifRange.iterrows():
-        minxy = process_tup(row['minxy'])
-        maxxy = process_tup(row['maxxy'])
-        if minxy[0] <= x <= maxxy[0] \
-                and minxy[1] <= y <= maxxy[1] \
-                and catalog == row['catalog_id']:
-            return row['tif']
-
-
+# dictionary that will store all the lat lng ranges of each catalog ID
 cat_id_range = dict()
 
 # get lat lng range of catalog_id (corner points), iterate over the tifs in order to get the catalog's range
@@ -44,38 +44,41 @@ for catalog_id in tifRange['catalog_id'].unique():
             if catalog_id not in cat_id_range:
                 cat_id_range[catalog_id] = ((minx,miny),(maxx,maxy))
             else:
-                # get the minimum and maximum and save that as the range
+                # get the minimum and maximum and save that as the lat lng range
                 cat_id_range[catalog_id] = ((min(minx,cat_id_range[catalog_id][0][0]),
                                             min(miny,cat_id_range[catalog_id][0][1])),
                                             (max(maxx,cat_id_range[catalog_id][1][0]),
                                              max(maxy,cat_id_range[catalog_id][1][1])))
 
-# prints the ranges of every catalog_id
+# prints the lat lng ranges of every catalog_id
 for k,v in cat_id_range.items():
     print (k,v)
 
-print(tomnod.head(5))
-# process tomnod further to recover the missing catalog id
-post_event_catalog = ['105001000B95E200', '105001000B95E100', '1040010032211E00']
+# known catalogs that exist in the data set
+POST_EVENT_CATALOG = ['105001000B95E200', '105001000B95E100', '1040010032211E00']
+
+# process tomnod further to recover the missing catalog id by creating a new column 'complete_catalog_id"
 for index, row in tomnod.iterrows():
-    if row['catalog_id'] in post_event_catalog:
+    # checks to see if the catalog IDs are indicated,
+    if row['catalog_id'] in POST_EVENT_CATALOG:
         s = row['catalog_id']
-        # row['complete_catalog_id'] = s
-        tomnod.set_value(index,'complete_catalog_id',s)
-        # print("found existing post catalog", s)
+        tomnod.set_value(index, 'complete_catalog_id', s)
+    # tries to locate missing catalog IDs
     elif row['catalog_id'] == '':
+        # v = x value, k = y value
         for k,v in cat_id_range.items():
-            if v[0][0] <= row['tomnod_x'] <= v[1][0] and \
-                    v[0][1] <= row['tomnod_y'] <= v[1][1]:
-                # row['complete_catalog_id'] = k
+            # checks to see if the point is within the range of the catalog ID and stores it where it is found
+            if v[0][0] <= row['tomnod_x'] <= v[1][0] and v[0][1] <= row['tomnod_y'] <= v[1][1]:
                 tomnod.set_value(index,'complete_catalog_id',k)
                 tomnod.set_value(index,'catalog_id',k)
                 print(index)
 
+# checking to see what might still be missing values after the process runs
 print(tomnod.loc[tomnod['catalog_id'] == ''])
 print(tomnod.loc[tomnod['complete_catalog_id'] == ''])
 
-# be careful when uncomment this
+# be careful when uncomment this - Daniel
+# not being fed into any succeeding file, not sure why we need this - Andrew
 tomnod.to_csv('tomnod_complete-both-columns.csv', encoding='utf-8')
 print(tomnod.complete_catalog_id.unique())
 
@@ -83,38 +86,7 @@ print(tomnod.complete_catalog_id.unique())
 # make a complete table for corresponding tif to images of POST EVENT
 # this is very costly
 # be careful with the output file name
-list_of_post = ['105001000B95E200', '105001000B95E100', '1040010032211E00',
-                '105001000B9D8100', '1030010070C13600', '105001000B9D7F00',
-                '10400100324DAE00', '1020010065DF2700', '1020010068D6F400',
-                '1020010067290D00']
-'''
-with open('coordinateAndTif-post-3.csv','w') as myFile:
-    writer = csv.writer(myFile)
-    writer.writerow(['post_catalog_id','post_tif','pre_catalog_id','pre_tif','min_xy','max_xy','x_coord', 'y_coord', 'label'])
-    for index, row in tomnod.iterrows():
-        print("row in tomnod: ",index)
-        if row['complete_catalog_id'] in list_of_post:
-            for index_t, row_t in tifRange.iterrows():
-                minxy = process_tup(row_t['minxy'])
-                maxxy = process_tup(row_t['maxxy'])
-                if row['tomnod_x'] >= minxy[0] and row['tomnod_x'] <= maxxy[0] \
-                  and row['tomnod_y'] >= minxy[1] and row['tomnod_y'] <= maxxy[1] and row['catalog_id'] == row_t['catalog_id']:
-                    temp = [row['complete_catalog_id'], get_tif_from_coor(row['tomnod_x'],row['tomnod_y'],row['complete_catalog_id']),
-                        row_t['catalog_id'],get_tif_from_coor(row['tomnod_x'],row['tomnod_y'],row_t['catalog_id']),
-                        row_t['minxy'], row_t['maxxy'], 
-                        row['tomnod_x'], row['tomnod_y'], row['label']]
-                    #if (row['catalog_id'] == row_t['catalog_id']):
-                    #    temp.append(row['label']) 
-                    #else:
-                    #    temp.append('non-damaged '+ row['label'])
-                    writer.writerow(temp)
-                    break
-'''
-import os
-import gdal 
-
-
-def getRangeTif(tif):
+def get_range_tif(tif):
     # print(tif)
     ds = gdal.Open(tif)
     width = ds.RasterXSize
@@ -131,12 +103,12 @@ def getRangeTif(tif):
 
 
 for index, row in tomnod.iterrows():
-    if index%1000 == 0:
+    if index % 1000 == 0:
         print('tomnod row: ',index)
     s = row['complete_catalog_id']
     for file in os.listdir(s+'/'):
         if file.endswith('.tif'):
-            minmax = getRangeTif(s+'/'+file) 
+            minmax = get_range_tif(s + '/' + file)
             minxy = minmax[0]
             maxxy = minmax[1]
             if minxy[0] <= row['tomnod_x'] <= maxxy[0] \
