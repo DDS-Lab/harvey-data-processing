@@ -49,6 +49,7 @@ Process flow:
 4. run-all.py
 5. loop_through_dir.py  
 6. tomnod.py
+7. crop_post_event.py
 
 Script Documentation
 
@@ -90,8 +91,12 @@ of each and saves it in a csv file.
 * tomnod.py  
 This script goes through the TomNod GeoJSON file and creates a table that matches the
 point to the specific tif file that it exists in. This also goes through all the tif
-files to locate points that did not have the catalog ID indicated.  
+files to locate points that did not have the catalog ID indicated.    
 *Input:* digitalglobe_crowdsourcing_hurricane_harvey_20170915.geojson, tifRange-post-1.csv  
 *Output:* coordinateAndTif.csv  
 
-* 
+* crop_post_event.py  
+This script goes through the coordinateAndTif.csv reference file to crop the tiff images
+based on a determined, fixed pixel size.  
+*Input:* coordinateAndTif.csv  
+*Output:* jpeg images
