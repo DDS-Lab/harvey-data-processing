@@ -102,9 +102,12 @@ This script goes through the coordinateAndTif.csv reference file to crop the tif
 based on a determined, fixed pixel size.  
 *Input:* coordinateAndTif.csv  
 *Output:* jpeg images
+  
+   
+---   
 
 * sort_images.py
 This script separates the 3-band from the 1-band images and renames the files in a
-date_catalogid_img name format.
-*Input:* Tiff images in folders
+date_catalogid_img name format.  
+*Input:* Tiff images in folders  
 *Output:* Band Sorted images in folders
