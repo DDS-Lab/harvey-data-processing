@@ -11,7 +11,9 @@ import os
 SIZE = 0.000897575  # used to get exactly 400x400 images (maybe???) hyak: 0.000574448
 COUNT = 0
 FAIL = 0
-coordinate_tif_3 = pd.read_csv('coordinateAndTif-post-3.csv')
+COOR_TIF_POST = 'coordinateAndTif-post-3.csv'
+
+coordinate_tif_3 = pd.read_csv(COOR_TIF_POST)
 for index, row in coordinate_tif_3.iterrows():
     if row['label'] == 'Flooded / Damaged Building':
         folder = row['complete_catalog_id']
