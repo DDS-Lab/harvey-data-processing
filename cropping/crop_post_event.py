@@ -12,6 +12,7 @@ SIZE = 0.000897575  # used to get exactly 400x400 images (maybe???) hyak: 0.0005
 COUNT = 0
 FAIL = 0
 COOR_TIF_POST = 'coordinateAndTif-post-3.csv'
+CROP_POST_400 = 'cropped-post-400/'
 
 coordinate_tif_3 = pd.read_csv(COOR_TIF_POST)
 for index, row in coordinate_tif_3.iterrows():
@@ -26,7 +27,7 @@ for index, row in coordinate_tif_3.iterrows():
         print('{} {}'.format(folder, tif))
         try:
             ds = gdal.Open(''+folder+'/'+tif)
-            os.chdir('cropped-post-400/')
+            os.chdir(CROP_POST_400)
             try:
                 gdal.Translate(file_name_to_write, ds,
                                projWin=[xmin, ymin + 2 * SIZE, xmax, ymax - 2 * SIZE], format='jpeg')
