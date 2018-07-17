@@ -20,5 +20,3 @@ for date in os.listdir("/Volumes/My Book/Harvey/postevent/images"):
                 else:
                     new_path = ('/Volumes/My Book/Harvey/postevent/sorted_images/1_band/'+date+'_'+folder+'_'+img)
                     shutil.copy(img, new_path)
-
-                    #make comments
