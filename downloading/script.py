@@ -3,8 +3,9 @@ created by Daniel Cao
 to create bash script to download all the catalog id from the links
 download them to their respective catalog folders
 """
+POST_EVENT_CAT = 'postevent_catalogs.txt'
 
-catalogs = open('postevent_catalogs.txt', 'r').readlines()
+catalogs = open(POST_EVENT_CAT, 'r').readlines()
 
 for catalog in catalogs:
     print(catalog)
