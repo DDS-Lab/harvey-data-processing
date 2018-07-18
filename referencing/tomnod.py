@@ -14,9 +14,13 @@ import geopandas as gpd
 import os
 import pandas as pd
 
+DG_HARVEY_GJSON = 'digitalglobe_crowdsourcing_hurricane_harvey_20170915.geojson'
+TIF_RANGE_1 = 'tifRange-post-1.csv'
+COOR_TIF_CSV = 'coordinateAndTif.csv'
+
 # load the tomnod geojson file, TOMNOD = GEOJSON & tifRange file
-tomnod = gpd.read_file('digitalglobe_crowdsourcing_hurricane_harvey_20170915.geojson')
-tifRange = pd.read_csv('tifRange-post-1.csv')
+tomnod = gpd.read_file(DG_HARVEY_GJSON)
+tifRange = pd.read_csv(TIF_RANGE_1)
 
 
 # splitting coordinates to different callable variables
@@ -105,5 +109,5 @@ for index, row in tomnod.iterrows():
                 tomnod.set_value(index,'tif',file)
                 break
 
-tomnod.to_csv('coordinateAndTif.csv', encoding='utf-8')
+tomnod.to_csv(COOR_TIF_CSV, encoding='utf-8')
 
