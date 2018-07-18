@@ -6,8 +6,8 @@ the bash script calls each smaller script to run and download by creating a list
 
 import os
 
-RUN_POST = 'run-all-post.sh'
-POST_EVENT_DIR = "/Users/danielcao/Downloads/DDS/postevent"
+RUN_POST = 'txt_files/run-all-post.sh'
+POST_EVENT_DIR = "txt_files/"
 
 my_file = open(RUN_POST, 'w')
 
