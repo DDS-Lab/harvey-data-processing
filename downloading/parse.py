@@ -17,7 +17,7 @@ req = requests.get(page)
 soup = BeautifulSoup(req.content, "html.parser")
 
 #create directory to save txt files to
-os.makedir('/txt_files/')
+os.mkdir('/txt_files/')
 os.chdir('/txt_files/')
 
 # get download links per Catalog ID
