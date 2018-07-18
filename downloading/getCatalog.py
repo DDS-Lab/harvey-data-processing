@@ -4,8 +4,8 @@
 # import library
 import os
 
-POST_EVENT_DIR = "/Users/danielcao/Downloads/DDS/postevent"
-POST_EVENT_CAT = "postevent_catalogs.txt"
+POST_EVENT_DIR = "txt_files/"
+POST_EVENT_CAT = "txt_files/postevent_catalogs.txt"
 
 # the directory has all the download shell
 file = open(POST_EVENT_CAT, "w")
