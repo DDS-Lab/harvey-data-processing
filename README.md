@@ -30,19 +30,19 @@ Folder Arrangement (Hyak):
     a. crop_img.py
     
 Folder Arrangement (GitHub Repo):
-1. cropping 
+1. [cropping](https://github.com/DDS-Lab/harvey-data-processing/tree/master/cropping) 
 2. data
-3. downloading  
-    a. parse.py  
-    b. getCatalog.py  
-    c. script.py  
-    d. run-all.py
-4. notebooks
-5. referencing  
-    a. loop_through_dir.py  
-    b. tomnod.py  
-6. band_sorting
-    a. sort_images.py
+3. [downloading](https://github.com/DDS-Lab/harvey-data-processing/tree/master/downloading)  
+    a. [parse.py](https://github.com/DDS-Lab/harvey-data-processing/blob/master/downloading/parse.py)  
+    b. [getCatalog.py](https://github.com/DDS-Lab/harvey-data-processing/blob/master/downloading/getCatalog.py)
+    c. [script.py](https://github.com/DDS-Lab/harvey-data-processing/blob/master/downloading/script.py)  
+    d. [run-all.py](https://github.com/DDS-Lab/harvey-data-processing/blob/master/downloading/run-all.py)
+4. [notebooks](https://github.com/DDS-Lab/harvey-data-processing/tree/master/notebooks)
+5. [referencing](https://github.com/DDS-Lab/harvey-data-processing/tree/master/referencing)  
+    a. [loop_through_dir.py](https://github.com/DDS-Lab/harvey-data-processing/blob/master/referencing/loop_through_dir.py)  
+    b. [tomnod.py](https://github.com/DDS-Lab/harvey-data-processing/blob/master/referencing/tomnod.py)
+6. [band_sorting](https://github.com/DDS-Lab/harvey-data-processing/tree/master/band_sorting)
+    a. [sort_images.py](https://github.com/DDS-Lab/harvey-data-processing/blob/master/band_sorting/sort_images.py)
 
 Process flow:
 1. [parse.py](https://github.com/DDS-Lab/harvey-data-processing/blob/master/downloading/parse.py)
