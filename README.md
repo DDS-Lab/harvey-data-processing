@@ -45,13 +45,13 @@ Folder Arrangement (GitHub Repo):
     a. sort_images.py
 
 Process flow:
-1. parse.py
-2. getCatalog.py
-3. script.py
-4. run-all.py
-5. loop_through_dir.py  
-6. tomnod.py
-7. crop_post_event.py
+1. [parse.py](https://github.com/DDS-Lab/harvey-data-processing/blob/master/downloading/parse.py)
+2. [getCatalog.py](https://github.com/DDS-Lab/harvey-data-processing/blob/master/downloading/getCatalog.py)
+3. [script.py](https://github.com/DDS-Lab/harvey-data-processing/blob/master/downloading/script.py)
+4. [run-all.py](https://github.com/DDS-Lab/harvey-data-processing/blob/master/downloading/run-all.py)
+5. [loop_through_dir.py](https://github.com/DDS-Lab/harvey-data-processing/blob/master/referencing/loop_through_dir.py)  
+6. [tomnod.py](https://github.com/DDS-Lab/harvey-data-processing/blob/master/referencing/tomnod.py)
+7. [crop_post_event.py](https://github.com/DDS-Lab/harvey-data-processing/blob/master/cropping/crop_post_event.py)
 
 Script Documentation
 
