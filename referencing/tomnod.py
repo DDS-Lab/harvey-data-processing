@@ -1,3 +1,12 @@
+"""created by Daniel Cao
+This script creates a table from coordinates to corresponding tif images where you can find those coordinates and
+will look for the catalog IDs of those which are missing that information
+ Steps:
+1. Loads the tomnod geojson file and tifRange file
+2. Cleans the list of catalog IDs into a column called 'complete_catalog_id'
+3. Creates a reference table for the damage points <-> tif file
+"""
+
 import geopandas as gpd
 import pandas as pd
 import csv
