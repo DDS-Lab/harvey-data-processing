@@ -4,9 +4,11 @@ import gdal
 import os
 import csv
 
+#TIF_RANGE = 'tifRange.csv'
+TIF_RANGE_1 = 'tifRange-post-1.csv'
 
 folders = []
-# outfile = open('tifRange.csv', 'w')
+# outfile = open(TIF_RANGE, 'w')
 
 
 def get_range_tif(tif):
@@ -31,7 +33,7 @@ for file in os.listdir():
         folders.append(file)
 
 # Will loop through tifs found in the folders and append the csv file with the folder, file, min, and max values
-with open('tifRange-post-1.csv', 'w') as myFile:
+with open(TIF_RANGE_1, 'w') as myFile:
     writer = csv.writer(myFile)
     for folder in folders:
         # folder is the folder name

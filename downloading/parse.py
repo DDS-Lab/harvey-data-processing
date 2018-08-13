@@ -7,6 +7,7 @@ This script scrapes the Digital Globe Open Data Program Harvey Post-Event site t
 
 # import library
 import requests
+import os
 from bs4 import BeautifulSoup
 
 # set page
@@ -15,6 +16,10 @@ page = "http://www.digitalglobe.com/opendata/hurricane-harvey/post-event"
 # initialize instance
 req = requests.get(page)
 soup = BeautifulSoup(req.content, "html.parser")
+
+#create directory to save txt files to
+os.mkdir('txt_files/')
+os.chdir('txt_files/')
 
 # get download links per Catalog ID
 for textarea in soup.findAll("textarea"):	

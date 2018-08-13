@@ -9,13 +9,17 @@ import os
 
 
 def main():
-    # this file name where my raw data is stored
-    data = gpd.read_file('id-catalog/harvey_raws.geojson')
+    HARVEY_RAW = 'id-catalog/harvey_raws.geojson' # this file name where my raw data is stored
+    PATH = 'img/strip_img/' # path should be where you want to store the image. (don't edit the + filename part)
+    
+    data = gpd.read_file(HARVEY_RAW)
     points = data['geometry'].tolist()
 
     # this is a text file containing an image link for each strip on each line.
     # you can write code to do this yourself, or contact me for my program.
-    f = open("newlinks.txt", "r")
+    NEW_LINKS = "newlinks.txt"
+    
+    f = open(NEW_LINKS, "r")
     urls = f.readlines()
 
     for url in urls: # download file
@@ -24,12 +28,10 @@ def main():
 
         print(url)
         print(filename)
-
-        # path should be where you want to store the image. (don't edit the
-        # + filename part)
-        path = 'img/strip_img/' + filename
+        
+        path = PATH + filename
         r = requests.get(url, stream = True)
-        if r.status_code == 200: # 200: OK
+        if r.status_code == 200: # 200: OK: add more details
             with open(path, 'wb+') as f:
                 r.raw.decode_content = True
                 shutil.copyfileobj(r.raw, f)
@@ -51,9 +53,11 @@ def get_coords(filename):
 
 
 def check_coords(points, coords, filename):
+    IMG_STRIP_PT = 'img/strip_point/'
+    
     has_point = False
     # reformat here as well
-    name = 'img/strip_point/' + filename.split('.')[0] + '.txt'
+    name = IMG_STRIP_PT + filename.split('.')[0] + '.txt'
     point_list = open(name, 'w+')
     for point in points:
         if point.x >= coords[0] <= coords[2] and coords[1] <= point.y <= coords[3]:
