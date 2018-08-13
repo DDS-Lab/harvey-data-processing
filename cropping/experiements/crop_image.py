@@ -5,14 +5,18 @@ import subprocess
 
 
 def main():
-    strips = open('imgs.txt', 'r').readlines()
+    IMGS_TXT = 'imgs.txt'
+    STP_PT = 'strip_point/'
+    DATA_IMG = 'data_img/'
+    
+    strips = open(IMGS_TXT, 'r').readlines()
     for img in strips:
         name = img.split('.')[0]
         counter = 0
-        points_list = open('strip_point/' + name + '.txt').readlines()
+        points_list = open(STP_PT + name + '.txt').readlines()
 
         for point in points_list:
-            newfile = 'data_img/' + name + '_' + str(counter) + '.tif'
+            newfile = DATA_IMG + name + '_' + str(counter) + '.tif'
             open(newfile, 'w+')
             coords = point.split(' ')
             dim = corners(float(coords[0]), float(coords[1]))
